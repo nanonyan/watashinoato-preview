@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>私のあと | 記録一覧</title>
+  <link rel="shortcut icon" href="./static/favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .main-content {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 16px 12px;
+      text-align: left;
+      vertical-align: middle;
+      border: none;
+      border-bottom: 1px solid #e8ecef;
+    }
+
+    th {
+      background-color: #2c3e50;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    th:first-child {
+      border-top-left-radius: 12px;
+    }
+
+    th:last-child {
+      border-top-right-radius: 12px;
+    }
+
+    tbody tr {
+      transition: all 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #f8f9fa;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    tbody tr:nth-child(even):hover {
+      background-color: #e9ecef;
+    }
+
+    tbody tr:last-child td:first-child {
+      border-bottom-left-radius: 12px;
+    }
+
+    tbody tr:last-child td:last-child {
+      border-bottom-right-radius: 12px;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    input[type="datetime-local"],
+    input[type="text"],
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fff;
+    }
+
+    input[type="datetime-local"]:focus,
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #495057;
+      box-shadow: 0 0 0 3px rgba(73, 80, 87, 0.1);
+    }
+
+    textarea {
+      min-height: 60px;
+      font-family: inherit;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .update-button {
+      background-color: #007bff;
+      color: white;
+      margin-right: 8px;
+      box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    }
+    .update-button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+    }
+
+    .delete-button {
+      background-color: #dc3545;
+      color: white;
+      box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+    }
+    .delete-button:hover {
+      background-color: #c82333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+    }
+
+    /* フォームを横並びに */
+    form.inline-form {
+      display: inline-block;
+      margin: 0;
+    }
+
+    /* スマホ対応 */
+    @media (max-width: 600px) {
+      th, td {
+        font-size: 13px;
+        padding: 12px 8px;
+      }
+
+      button {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+
+      input[type="datetime-local"],
+      input[type="text"],
+      textarea {
+        padding: 8px 10px;
+        font-size: 13px;
+      }
+
+      table {
+        font-size: 13px;
+      }
+    }
+
+    /* ナビバー背景にやわらかグラデーション＆シャドウ */
+    .custom-navbar {
+      background: linear-gradient(90deg, #2a5bd7, #3f7ded);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      padding: 12px 0;
+    }
+
+    /* ロゴフォントとグラデーション */
+    .logo-font {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .gradient-text {
+      background: linear-gradient(45deg, #ffffff, #d9d9d9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 4px rgba(0,0,0,0.25);
+    }
+
+    /* ナビリンク */
+    .nav-link-custom {
+      color: white;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      margin-left: 1rem;
+    }
+    .nav-link-custom:hover {
+      color: #ffd54f; /* 明るいイエローでアクセント */
+      text-decoration: underline;
+    }
+
+    /* ログアウトボタン */
+    .btn-logout {
+      border-color: white;
+      color: white;
+      font-weight: 600;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-logout:hover {
+      background-color: white;
+      color: #2a5bd7;
+      border-color: white;
+    }
+  </style>
+</head>
+<body>
+  <nav class="custom-navbar">
+    <div class="container-fluid d-flex justify-content-between align-items-center px-4">
+      <div class="d-flex align-items-center">
+        <a class="navbar-brand gradient-text logo-font me-3" href="#">私のあと</a>
+        <a class="nav-link nav-link-custom p-0" href="{{ url_for('list_records') }}">履歴一覧</a>
+      </div>
+      <div>
+        {% if 'user_id' in session %}
+          <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-logout">ログアウト</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <h2>記録一覧</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>タイプ</th>
+        <th>日時</th>
+        <th>薬名 / 理由</th>
+        <th>錠数</th>
+        <th>操作</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      <tr>
+        <td>{{ record.type }}</td>
+        <form method="POST" action="{{ url_for('update_record', record_id=record.id) }}">
+          <td>
+            {% if record.when %}
+              <input type="datetime-local" name="when" value="{{ record.when.strftime('%Y-%m-%dT%H:%M') }}">
+            {% else %}
+              <input type="datetime-local" name="when" value="">
+            {% endif %}
+          </td>
+          <td>
+            {% if record.type == '自傷' %}
+              <textarea name="why_self_cut" rows="2">{{ record.why }}</textarea>
+            {% elif record.type == 'OD' %}
+              <input type="text" name="what_dose" value="{{ record.what_dose }}"><br>
+              <textarea name="why_od" rows="2">{{ record.why }}</textarea>
+            {% endif %}
+          </td>
+          <td>
+            {% if record.type == 'OD' %}
+              <input type="text" name="many_dose" value="{{ record.many_dose }}">
+            {% else %}
+              -
+            {% endif %}
+          </td>
+          <td>
+            <button type="submit" class="update-button">更新</button>
+          </td>
+        </form>
+        <td>
+          <form method="POST" action="{{ url_for('delete_record', record_id=record.id) }}" onsubmit="return confirm('本当に削除しますか？');">
+            <button type="submit" class="delete-button">削除</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6" style="text-align:center;">記録がありません</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    
+  </table>
+
+      <p><a href="{{ url_for('index') }}">カレンダーに戻る</a></p>
+  </div>
+</body>
+</html>

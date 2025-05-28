@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>登録</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .registration-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .registration-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            font-weight: 600;
+            font-size: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fafbfc;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #333;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .error-message::before {
+            content: "⚠️";
+            margin-right: 0.5rem;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 0.875rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .submit-button:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .submit-button:active {
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 576px) {
+            .registration-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            .registration-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <h1 class="registration-title">アカウント登録</h1>
+        
+        <form method="post" action="/register">
+            <div class="form-group">
+                <input class="form-input" 
+                       type="text" 
+                       name="username" 
+                       placeholder="ユーザ名を入力してください（3文字以上）"
+                       value="{{ form and form['username'] }}">
+                {% if error_user %}
+                <div class="error-message">
+                    ユーザ名は3文字以上で入力してください
+                </div>
+                {% endif %}
+                {% if error_unique %}
+                <div class="error-message">
+                    このユーザ名は既に使用されています
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <input class="form-input" 
+                       type="password" 
+                       name="password" 
+                       placeholder="パスワードを入力してください">
+                {% if error_password %}
+                <div class="error-message">
+                    パスワードは必須項目です
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <input class="form-input" 
+                       type="password" 
+                       name="password_confirmation"
+                       placeholder="パスワードを再度入力してください">
+                {% if error_confirm %}
+                <div class="error-message">
+                    パスワードが一致しません。再度確認してください
+                </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="submit-button">
+                アカウントを登録する
+            </button>
+        </form>
+    </div>
+</body>
+</html>
