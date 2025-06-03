@@ -160,9 +160,6 @@ def create():
     many_dose = request.form.get("many_dose") or None
     why_od = request.form.get("why_od") or None
 
-    app.logger.info("フォームから受け取った値:")
-    app.logger.info(f"when_self_cut={when_self_cut}, why_self_cut={why_self_cut}, "
-                    f"when_od={when_od}, what_dose={what_dose}, many_dose={many_dose}, why_od={why_od}")
 
     try:
         with get_data_db() as conn:
@@ -203,30 +200,30 @@ def list_records():
                     record_id, when_self_cut, why_self_cut, when_od, why_od, what_dose, many_dose = row
 
                     if when_self_cut:
-                        record = {
+                        records.append({
                             "id": record_id,
                             "type": "自傷",
                             "when": when_self_cut,
                             "why": why_self_cut,
                             "what_dose": "",
                             "many_dose": ""
-                        }
-                    else:
-                        record = {
+                        })
+
+                    if when_od:
+                        records.append({
                             "id": record_id,
                             "type": "OD",
                             "when": when_od,
                             "why": why_od,
                             "what_dose": what_dose or "",
                             "many_dose": many_dose or ""
-                        }
-
-                    records.append(record)
+                        })
 
     except Exception as ex:
         print(f"一覧取得エラー: {ex}")
 
     return render_template("list.html", records=records)
+
 
 
 
