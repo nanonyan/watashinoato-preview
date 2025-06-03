@@ -13,6 +13,3 @@
 - FullCalendar
 
 あくまでも授業内で使うために公開しています。
-# watashinoato-preview
-# watashinoato-preview
-# watashinoato-preview
