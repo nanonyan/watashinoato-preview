@@ -21,7 +21,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 
-  <title>私のあと | ホーム</title>
+  <title>私のこと | ホーム</title>
 
   <style>
     body {
@@ -47,13 +47,12 @@
       z-index: 1000;
     }
 
-    /* ナビバー背景にやわらかグラデーション＆シャドウ */
 .custom-navbar {
   background: linear-gradient(90deg, #2a5bd7, #3f7ded);
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* ロゴフォントとグラデーション */
+
 .logo-font {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.7rem;
@@ -69,7 +68,6 @@
   text-shadow: 0 0 4px rgba(0,0,0,0.25);
 }
 
-/* ナビリンク */
 .nav-link-custom {
   color: white;
   font-weight: 600;
@@ -77,11 +75,11 @@
   margin-left: 1rem;
 }
 .nav-link-custom:hover {
-  color: #ffd54f; /* 明るいイエローでアクセント */
+  color: #ffd54f; 
   text-decoration: underline;
 }
 
-/* ログアウトボタン */
+
 .btn-logout {
   border-color: white;
   color: white;
@@ -138,7 +136,7 @@
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg px-4 position-relative custom-navbar">
-    <a class="navbar-brand gradient-text logo-font" href="/">私のあと</a>
+    <a class="navbar-brand gradient-text logo-font" href="/">私のこと</a>
     <a class="nav-link text-white nav-link-custom" href="{{ url_for('list_records') }}">履歴一覧</a>
     <div class="ms-auto">
       {% if 'user_id' in session %}
